@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  aop-homework-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: aop-homework-service
+    container_name: aop-homework-service
+    ports:
+      - '8085:8085'
+    environment:
+      - SERVER_PORT=8085
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://t1-hw3-db:5432/t1_hw3_db
+      - SPRING_DATASOURCE_USERNAME=masfuj
+      - SPRING_DATASOURCE_PASSWORD=jfejfe11
+    depends_on:
+      - t1-hw3-db
+
+  t1-hw3-db:
+    image: postgres:15.3-alpine
+    container_name: t1-hw3-db
+    ports:
+      - '6432:5432'
+    environment:
+      - POSTGRES_DB=t1_hw3_db
+      - POSTGRES_USER=masfuj
+      - POSTGRES_PASSWORD=jfejfe11
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
